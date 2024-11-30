@@ -5,6 +5,8 @@
       <root url="jar://$PROJECT_DIR$/PDM_Project/lib/rs2xml.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/PDM_Project/lib/rs2xml.jar!/src" />
+    </SOURCES>
   </library>
 </component>

@@ -2,15 +2,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-//dsafl
 
 public class LoginFrame extends JFrame {
 
     public LoginFrame() {
         // Set up JFrame properties
-        setTitle("Inventory Management System - Login");
+        setTitle("Warehouse Management System - Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000, 600); // Adjusted JFrame size
+        setSize(1200, 600); // Adjusted JFrame size
         setLayout(new BorderLayout());
 
         // Left panel for the illustration
@@ -19,12 +18,12 @@ public class LoginFrame extends JFrame {
         leftPanel.setLayout(new BorderLayout());
 
         // Load and scale the image to a smaller size
-        ImageIcon originalIcon = new ImageIcon("C:\\Users\\Hoang Phuc\\Downloads\\Project_PDM\\Project_PDM\\PDM_Project\\Images/login_theme.png"); // Replace with your image path
+        ImageIcon originalIcon = new ImageIcon("Images/login_theme.png"); // Replace with your image path
         Image scaledImage = originalIcon.getImage().getScaledInstance(600, 400, Image.SCALE_SMOOTH); // Adjust dimensions (smaller size)
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
         JLabel illustration = new JLabel(scaledIcon); // Use the scaled image
-        JLabel title = new JLabel("Inventory Management System", SwingConstants.CENTER);
+        JLabel title = new JLabel("Warehouse Management System", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 24));
         leftPanel.add(illustration, BorderLayout.CENTER);
         leftPanel.add(title, BorderLayout.SOUTH);
@@ -35,10 +34,10 @@ public class LoginFrame extends JFrame {
         rightPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
         JLabel welcomeLabel = new JLabel("Welcome", SwingConstants.CENTER);
-        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 30));
 
-        JTextField emailField = new JTextField();
-        emailField.setBorder(BorderFactory.createTitledBorder("Email"));
+        JTextField usernameField = new JTextField();
+        usernameField.setBorder(BorderFactory.createTitledBorder("Username"));
 
         JPasswordField passwordField = new JPasswordField();
         passwordField.setBorder(BorderFactory.createTitledBorder("Password"));
@@ -49,10 +48,15 @@ public class LoginFrame extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String email = emailField.getText();
+                String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
-                if (DatabaseConnector.verifyCredentials(email, password)) {
-                    JOptionPane.showMessageDialog(LoginFrame.this, "Login Successful!");
+
+                // Check predefined credentials
+                if (username.equals("admin") && password.equals("admin")) {
+                    // JOptionPane.showMessageDialog(LoginFrame.this, "Login Successful!");
+                    dispose(); // Close the login frame
+                    DashboardFrame dashboard = new DashboardFrame();
+                    dashboard.setVisible(true); // Open the dashboard
                 } else {
                     JOptionPane.showMessageDialog(LoginFrame.this, "Invalid Credentials");
                 }
@@ -62,7 +66,7 @@ public class LoginFrame extends JFrame {
         closeButton.addActionListener(e -> System.exit(0));
 
         rightPanel.add(welcomeLabel);
-        rightPanel.add(emailField);
+        rightPanel.add(usernameField);
         rightPanel.add(passwordField);
         rightPanel.add(loginButton);
         rightPanel.add(closeButton);
@@ -75,11 +79,4 @@ public class LoginFrame extends JFrame {
         setLocationRelativeTo(null);
     }
 
-    public static void main(String[] args) {
-        // Launch the application
-        SwingUtilities.invokeLater(() -> {
-            LoginFrame frame = new LoginFrame();
-            frame.setVisible(true);
-        });
-    }
 }
