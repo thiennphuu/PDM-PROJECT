@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="358ce2e0-d144-4967-aa7b-97d157aa6c00" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../src/DashboardFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/Functions/CustomerManagementFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/Functions/DatabaseConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/Functions/ManageUserFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/Functions/ProductManagementFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/TtestT/EmployeeTable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/TtestTT/CustomDashboardFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/TtestTT/EmployeeTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/libraries/lib.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/libraries/lib.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/DatabaseConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/LoginFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/LoginFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Project_PDM.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Project_PDM.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Project_PDM/DatabaseConnector.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/Project_PDM/DatabaseConnector.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Project_PDM/LoginFrame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/Project_PDM/LoginFrame$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Project_PDM/LoginFrame.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../out/production/Project_PDM/LoginFrame.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="2pZbHP0YB23gv6urbqWIZ0KDAdV" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Lenovo/Downloads/Project_PDM23",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="358ce2e0-d144-4967-aa7b-97d157aa6c00" name="Changes" comment="" />
+      <created>1732976457094</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1732976457094</updated>
+      <workItem from="1732976458101" duration="19000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
