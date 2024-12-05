@@ -16,5 +16,15 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/PDM_Project/lib/rs2xml.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="jar://$MODULE_DIR$/PDM_Project/lib/rs2xml.jar!/" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>
