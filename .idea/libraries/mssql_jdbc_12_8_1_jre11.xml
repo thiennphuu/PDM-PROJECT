@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="lib">
+  <library name="mssql-jdbc-12.8.1.jre11">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/PDM_Project/lib/mssql-jdbc-12.8.1.jre11.jar!/" />
       <root url="jar://$PROJECT_DIR$/PDM_Project/lib/rs2xml.jar!/" />
