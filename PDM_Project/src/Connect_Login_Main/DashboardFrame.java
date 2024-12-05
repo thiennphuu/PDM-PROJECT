@@ -68,7 +68,6 @@ public class DashboardFrame extends JFrame {
         JButton productButton = createIconButton("Product", "Images/Product_Icon.png");
         JButton customerButton = createIconButton("Customer", "Images/Customer_Icon.png");
         JButton logoutButton = createIconButton("Logout", "Images/Exit_Icon.png");
-
         // Thêm hành động cho nút
         userButton.addActionListener(e -> {
             WorkerManagementFrame manageUserFrame = new WorkerManagementFrame();

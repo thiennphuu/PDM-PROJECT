@@ -19,6 +19,8 @@ public class LoginFrame extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
+//                JButton userButton = createIconButton("Worker", getClass().getResource("/Images/Worker_Icon.png"));
+
                 ImageIcon backgroundImage = new ImageIcon("Images/Background_login.jpg"); // Update with the correct path
                 g.drawImage(backgroundImage.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
