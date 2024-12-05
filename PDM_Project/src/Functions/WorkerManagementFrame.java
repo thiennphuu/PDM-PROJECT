@@ -339,6 +339,8 @@ public class WorkerManagementFrame extends JFrame {
         employeeDialog.setVisible(true);
     }
 
+
+
     //TEST FRAME
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

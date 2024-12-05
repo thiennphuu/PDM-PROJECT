@@ -18,7 +18,7 @@ public class DashboardFrame extends JFrame {
         // Cài đặt JFrame
         setTitle("Warehouse Management System - Dashboard");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1200, 700);
+        setSize(1200, 700); // Kích thước cửa sổ
         setLayout(new BorderLayout());
 
         // Tạo Header Panel
@@ -46,9 +46,9 @@ public class DashboardFrame extends JFrame {
         startClock();
 
         // Tạo Summary Panel (chứa thông tin tổng)
-        JPanel summaryPanel = new JPanel(new GridLayout(2, 3, 15, 15));
+        JPanel summaryPanel = new JPanel(new GridLayout(2, 3, 15, 15)); // 2 hàng, 3 cột với khoảng cách
         summaryPanel.setBackground(Color.WHITE);
-        summaryPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        summaryPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Padding
 
         // // Thêm các ô thông tin với góc bo tròn
         summaryPanel.add(createRoundedInfoBox("Total Employee", getTotal("SELECT COUNT(Employee_ID) FROM Employee"), new Color(0, 0, 255)));
@@ -60,9 +60,9 @@ public class DashboardFrame extends JFrame {
 
 
         // Tạo Button Panel (chứa các nút chức năng)
-        JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 10, 10));
+        JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 10, 10)); // 4 hàng, 1 cột
         buttonPanel.setBackground(Color.WHITE);
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Padding
 
         JButton userButton = createIconButton("Worker", "Images/Worker_Icon.png");
         JButton productButton = createIconButton("Product", "Images/Product_Icon.png");
@@ -89,7 +89,7 @@ public class DashboardFrame extends JFrame {
             int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to log out?", "Confirm Logout",
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (response == JOptionPane.YES_OPTION) {
-                LoginFrame loginFrame = new LoginFrame();
+                LoginFrame loginFrame = new LoginFrame(); // Assuming LoginFrame exists
                 loginFrame.setVisible(true);
                 dispose(); // Close the DashboardFrame
             }

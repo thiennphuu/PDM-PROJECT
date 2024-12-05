@@ -1,9 +1,9 @@
 package Functions;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.*;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class ProductManagementFrame extends JFrame {
 
@@ -105,58 +105,57 @@ public class ProductManagementFrame extends JFrame {
             JOptionPane.showMessageDialog(this, "Please select a product to view its warehouse.");
             return;
         }
-    
+
         int productId = (int) productTableModel.getValueAt(selectedRow, 0); // Product_ID column
-    
+
         String query = """
             SELECT 
-                w.Warehouse_ID, 
-                w.Warehouse_Name, 
-                w.Location, 
-                w.Capacity
-            FROM Warehouse w
-            JOIN Store s ON w.Warehouse_ID = s.Warehouse_ID
-            WHERE s.Product_ID = ?
+                w.Warehouse_Name,
+                w.Location,
+                p.Product_Name,
+                SUM(s.Quantity) AS Total_Quantity
+            FROM Store s
+            INNER JOIN Warehouse w ON s.Warehouse_ID = w.Warehouse_ID
+            INNER JOIN Product p ON s.Product_ID = p.Product_ID
+            WHERE p.Product_ID = ? 
+            GROUP BY w.Warehouse_Name, w.Location, p.Product_Name;
         """;
-    
+
         showDataDialog(
-            "Warehouse Details",
-            query,
-            new String[]{"Warehouse_ID", "Warehouse_Name", "Location", "Capacity"},
-            productId
+                "Warehouse Details",
+                query,
+                new String[]{"Warehouse_Name", "Location", "Product_Name", "Total_Quantity"},
+                productId
         );
     }
-    
 
+    // View shipment status for the selected product
+    private void viewShipmentStatusForSelectedProduct() {
+        int selectedRow = productTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a product to view its shipment status.");
+            return;
+        }
 
-// View shipment status for the selected product
-private void viewShipmentStatusForSelectedProduct() {
-    int selectedRow = productTable.getSelectedRow();
-    if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(this, "Please select a product to view its shipment status.");
-        return;
+        int productId = (int) productTableModel.getValueAt(selectedRow, 0); // Product_ID column
+        String query = """
+            SELECT 
+                o.Order_ID,
+                s.Delivery_Status, 
+                s.Recipent_Date, 
+                s.Delivery_Date
+            FROM Orders o
+            JOIN Order_Detail od ON o.Order_ID = od.Order_ID
+            JOIN Shipment s ON o.Shipment_ID = s.Shipment_ID
+            WHERE od.Product_ID = ?
+        """;
+        showDataDialog(
+                "Shipment Status",
+                query,
+                new String[]{"Order_ID", "Delivery_Status", "Recipent_Date", "Delivery_Date"},
+                productId
+        );
     }
-
-    int productId = (int) productTableModel.getValueAt(selectedRow, 0); // Product_ID column
-    String query = """
-        SELECT 
-            o.Order_ID,
-            s.Delivery_Status, 
-            s.Recipent_Date, 
-            s.Delivery_Date
-        FROM Orders o
-        JOIN Order_Detail od ON o.Order_ID = od.Order_ID
-        JOIN Shipment s ON o.Shipment_ID = s.Shipment_ID
-        WHERE od.Product_ID = ?
-    """;
-    showDataDialog(
-        "Shipment Status",
-        query,
-        new String[]{"Order_ID", "Delivery_Status", "Recipent_Date", "Delivery_Date"},
-        productId
-    );
-}
-
 
     // Helper method to display data in a new dialog
     private void showDataDialog(String title, String query, String[] columnNames, int parameter) {
@@ -188,7 +187,7 @@ private void viewShipmentStatusForSelectedProduct() {
 
         dialog.setVisible(true);
     }
-
+    //TEST CASE
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new ProductManagementFrame());
     }

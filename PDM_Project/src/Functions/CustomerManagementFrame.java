@@ -1,9 +1,9 @@
 package Functions;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.*;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class CustomerManagementFrame extends JFrame {
 
@@ -45,7 +45,7 @@ public class CustomerManagementFrame extends JFrame {
 
         // Buttons
         JButton loadCustomersButton = new JButton("Load Customers");
-        JButton viewOrdersButton = new JButton("View Orders");
+        JButton viewOrdersButton = new JButton("View Detail");
 
         buttonPanel.add(loadCustomersButton);
         buttonPanel.add(viewOrdersButton);
@@ -53,7 +53,7 @@ public class CustomerManagementFrame extends JFrame {
         // Add button functionality
         loadCustomersButton.addActionListener(e -> loadCustomerData());
 
-        viewOrdersButton.addActionListener(e -> viewCustomerOrders());
+        viewOrdersButton.addActionListener(e -> viewCustomerDetails());
 
         setVisible(true);
     }
@@ -81,71 +81,126 @@ public class CustomerManagementFrame extends JFrame {
         }
     }
 
-// View orders for the selected customer
-private void viewCustomerOrders() {
-    int selectedRow = customerTable.getSelectedRow();
-    if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(this, "Please select a customer to view orders.");
-        return;
-    }
-
-    int customerId = Integer.parseInt(customerTableModel.getValueAt(selectedRow, 0).toString());
-
-    // Create a dialog to display orders
-    JDialog orderDialog = new JDialog(this, "Orders for Customer ID: " + customerId, true);
-    orderDialog.setSize(1000, 500);
-    orderDialog.setLocationRelativeTo(this);
-
-    String[] orderColumns = {"Order_ID", "Order_Date", "Expected_Delivery", "Product_Name", "Category", "Price", "Supplier_ID", "Description"};
-    DefaultTableModel orderTableModel = new DefaultTableModel(orderColumns, 0);
-    JTable orderTable = new JTable(orderTableModel);
-    JScrollPane orderScrollPane = new JScrollPane(orderTable);
-
-    orderDialog.add(orderScrollPane, BorderLayout.CENTER);
-
-    // Load orders and product details from the database
-    String query = """
-        SELECT 
-            o.Order_ID,
-            o.Order_Date,
-            o.Expected_Delivery,
-            p.Product_Name,
-            p.Category,
-            p.Price,
-            p.Supplier_ID,
-            p.Description
-        FROM Orders o
-        JOIN Order_Detail od ON o.Order_ID = od.Order_ID
-        JOIN Product p ON od.Product_ID = p.Product_ID
-        WHERE o.Customer_ID = ?
-    """;
-
-    try (Connection connection = DatabaseConnection.getConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-        preparedStatement.setInt(1, customerId);
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        while (resultSet.next()) {
-            int orderId = resultSet.getInt("Order_ID");
-            Date orderDate = resultSet.getDate("Order_Date");
-            Date expectedDelivery = resultSet.getDate("Expected_Delivery");
-            String productName = resultSet.getString("Product_Name");
-            String category = resultSet.getString("Category");
-            double price = resultSet.getDouble("Price");
-            int supplierId = resultSet.getInt("Supplier_ID");
-            String description = resultSet.getString("Description");
-
-            // Add order and product data to the order table model
-            orderTableModel.addRow(new Object[]{orderId, orderDate, expectedDelivery, productName, category, price, supplierId, description});
+    private void viewCustomerDetails() {
+        int selectedRow = customerTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a customer to view details.");
+            return;
         }
 
-    } catch (SQLException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error loading orders: " + e.getMessage());
+        int customerId = Integer.parseInt(customerTableModel.getValueAt(selectedRow, 0).toString());
+
+        // Create a dialog to display transactions and orders
+        JDialog detailDialog = new JDialog(this, "Details for Customer ID: " + customerId, true);
+        detailDialog.setSize(1200, 700);
+        detailDialog.setLocationRelativeTo(this);
+        detailDialog.setLayout(new BorderLayout());
+
+        // Create split pane for transactions and orders
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        splitPane.setDividerLocation(300);
+        detailDialog.add(splitPane, BorderLayout.CENTER);
+
+        // Panel for Transactions
+        String[] transactionColumns = {"Product_Name", "Transaction_Date", "Transaction_Time", "Transaction_Status", "Payment_Method", "Amount"};
+        DefaultTableModel transactionTableModel = new DefaultTableModel(transactionColumns, 0);
+        JTable transactionTable = new JTable(transactionTableModel);
+        JScrollPane transactionScrollPane = new JScrollPane(transactionTable);
+        JPanel transactionPanel = new JPanel(new BorderLayout());
+        transactionPanel.setBorder(BorderFactory.createTitledBorder("Transactions"));
+        transactionPanel.add(transactionScrollPane, BorderLayout.CENTER);
+
+        // Panel for Orders
+        String[] orderColumns = {"Order_ID", "Order_Date", "Expected_Delivery", "Product_Name", "Category", "Price", "Supplier_ID", "Description"};
+        DefaultTableModel orderTableModel = new DefaultTableModel(orderColumns, 0);
+        JTable orderTable = new JTable(orderTableModel);
+        JScrollPane orderScrollPane = new JScrollPane(orderTable);
+        JPanel orderPanel = new JPanel(new BorderLayout());
+        orderPanel.setBorder(BorderFactory.createTitledBorder("Orders"));
+        orderPanel.add(orderScrollPane, BorderLayout.CENTER);
+
+        // Add panels to split pane
+        splitPane.setTopComponent(transactionPanel);
+        splitPane.setBottomComponent(orderPanel);
+
+        // Load transactions into the Transactions table
+        String transactionQuery = """
+            SELECT 
+                p.Product_Name,
+                t.Transaction_Date,
+                t.Transaction_Time,
+                t.Transaction_Status,
+                t.Payment_Method,
+                t.Amount
+            FROM Transactions t
+            JOIN Orders o ON t.Customer_ID = o.Customer_ID
+            JOIN Order_Detail od ON o.Order_ID = od.Order_ID
+            JOIN Product p ON od.Product_ID = p.Product_ID
+            WHERE t.Customer_ID = ?
+        """;
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement transactionStmt = connection.prepareStatement(transactionQuery)) {
+            transactionStmt.setInt(1, customerId);
+            ResultSet transactionResult = transactionStmt.executeQuery();
+
+            while (transactionResult.next()) {
+                transactionTableModel.addRow(new Object[]{
+                        transactionResult.getString("Product_Name"),
+                        transactionResult.getDate("Transaction_Date"),
+                        transactionResult.getTime("Transaction_Time"),
+                        transactionResult.getString("Transaction_Status"),
+                        transactionResult.getString("Payment_Method"),
+                        transactionResult.getBigDecimal("Amount")
+                });
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading transaction data: " + e.getMessage());
+        }
+
+        // Load orders into the Orders table
+        String orderQuery = """
+            SELECT 
+                o.Order_ID,
+                o.Order_Date,
+                o.Expected_Delivery,
+                p.Product_Name,
+                p.Category,
+                p.Price,
+                p.Supplier_ID,
+                p.Description
+            FROM Orders o
+            JOIN Order_Detail od ON o.Order_ID = od.Order_ID
+            JOIN Product p ON od.Product_ID = p.Product_ID
+            WHERE o.Customer_ID = ?
+        """;
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement orderStmt = connection.prepareStatement(orderQuery)) {
+            orderStmt.setInt(1, customerId);
+            ResultSet orderResult = orderStmt.executeQuery();
+
+            while (orderResult.next()) {
+                orderTableModel.addRow(new Object[]{
+                        orderResult.getInt("Order_ID"),
+                        orderResult.getDate("Order_Date"),
+                        orderResult.getDate("Expected_Delivery"),
+                        orderResult.getString("Product_Name"),
+                        orderResult.getString("Category"),
+                        orderResult.getDouble("Price"),
+                        orderResult.getInt("Supplier_ID"),
+                        orderResult.getString("Description")
+                });
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading orders: " + e.getMessage());
+        }
+
+        detailDialog.setVisible(true);
     }
 
-    orderDialog.setVisible(true);
-}
 
 
     public static void main(String[] args) {
